@@ -1,1 +1,3 @@
 [Takealug EPG Grabber 1.1.3+matrix] EPG Datei (guide.xml) Erstellt!
+[Takealug EPG Grabber 1.1.5+matrix] x86_64
+[Takealug EPG Grabber 1.1.5+matrix] Multithreading is currently under Kodi 19 broken, please disable it
