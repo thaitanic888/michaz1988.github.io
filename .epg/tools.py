@@ -37,7 +37,7 @@ def comp(source, destination):
 		#return False
 
 def isfile(file):
-	return os.path.isfile(file):
+	return os.path.isfile(file)
 
 def exists(fileorfolder):
 	return os.path.exists(fileorfolder)
