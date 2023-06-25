@@ -12,7 +12,7 @@ import tvspielfilm_DE
 #import zattoo
 import platform
 import importlib
-
+tools.delete(os.path.join(datapath, 'log.txt'))
 thread_temppath = os.path.join(temppath, "multithread")
 machine = platform.machine()
 
