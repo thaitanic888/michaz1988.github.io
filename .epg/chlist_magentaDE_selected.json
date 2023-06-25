@@ -1,0 +1,22 @@
+{
+    "channellist": [
+        {
+            "contentId": "148",
+            "name": "Boomerang",
+            "pictures": [
+                {
+                    "href": "http://ngiss.t-online.de/sweetprogrammanager/media/a3a2fd1ad65041c5fec95749167405df48193527.png"
+                }
+            ]
+        },
+        {
+            "contentId": "5577",
+            "name": "Sky Showcase",
+            "pictures": [
+                {
+                    "href": "http://ngiss.t-online.de/sweetprogrammanager/media/09629b5939190f0df366f958f199d6d499b2c4bd.png"
+                }
+            ]
+        }
+    ]
+}
