@@ -206,7 +206,7 @@ def download_multithread(thread_temppath, download_threads):
         log('{} {} {} '.format(provider, items_to_download, loc(32361)))
         #pDialog = xbmcgui.DialogProgressBG()
         log('{} Multithread({}) Mode'.format(provider, needed_threads))
-        pDialog.create('{} {} '.format(loc(32500), provider), '{} {}'.format('100', loc(32501)))
+        notify('{} {} '.format(loc(32500), provider), '{} {}'.format('100', loc(32501)))
 
         jobs = []
         for thread in range(0, int(needed_threads)):
