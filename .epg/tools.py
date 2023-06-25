@@ -1,7 +1,7 @@
 import os, shutil, gzip
 
 addon_name = "Takealug EPG Grabber"
-addon_version = "1.1.3+matrix"
+addon_version = "1.1.5+matrix"
 
 datapath = os.path.abspath(os.path.dirname(__file__))
 temppath = os.path.join(datapath, "temp")
@@ -23,28 +23,24 @@ def log(message):
 
 def copy(source, destination):
 	try:
-		shutil.copyfile(source, destination)
+		shutil.copy(source, destination)
 		return True
 	except:
 		return False
 		
 def comp(source, destination):
-	try:
-		with open(source, 'rb') as f_in, gzip.open(destination, 'wb') as f_out:
-			f_out.writelines(f_in)
-		return True
-	except:
-		return False
+	#try:
+	with open(source, 'rb') as f_in, gzip.open(destination, 'wb') as f_out:
+		f_out.writelines(f_in)
+		#return True
+	#except:
+		#return False
 
 def isfile(file):
-	if os.path.isfile(file):
-		return True
-	return False
+	return os.path.isfile(file):
 
 def exists(fileorfolder):
-	if os.path.isfile(fileorfolder) or os.path.isdir(fileorfolder):
-		return True
-	return False
+	return os.path.exists(fileorfolder)
 
 def makedir(dir):
 	if not os.path.exists(dir):

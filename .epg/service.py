@@ -26,8 +26,8 @@ timeswitch_3 = 0
 enable_rating_mapper = False
 use_local_sock = False
 tvh_local_sock = ""
-download_threads = 2
-enable_multithread = False
+download_threads = 5
+enable_multithread = True
 
 
 ## Get Enabled Grabbers
@@ -74,7 +74,7 @@ else:
 	enabled_grabber = False
 
 guide_temp = os.path.join(datapath, 'guide.xml')
-guide_dest = os.path.join(os.path.dirname(os.path.dirname(datapath)), 'guide.xml.gz')
+guide_dest = os.path.join(datapath, 'guide.xml.gz')
 grabber_cron = os.path.join(datapath, 'grabber_cron.json')
 grabber_cron_tmp = os.path.join(temppath, 'grabber_cron.json')
 xmltv_dtd = os.path.join(datapath, 'xmltv.dtd')
