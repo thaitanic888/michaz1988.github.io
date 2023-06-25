@@ -14,13 +14,18 @@ jobs:
 
   cron:
 
+    runs-on: ubuntu-latest
+
     steps:
 
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v4
-      
+      - name: cron
+
+        run: cd $HOME/work/michaz1988.github.io/michaz1988.github.io/.epg/ && python3 service.py
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+
         with:
-          python-version: '3.11'
-          check-latest: true
-      - run: python service.py
+
+          commit_message: cron
