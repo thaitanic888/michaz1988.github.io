@@ -973,24 +973,6 @@
             ]
         },
         {
-            "contentId": "JUNIO",
-            "name": "Junior",
-            "pictures": [
-                {
-                    "href": "http://live.tvspielfilm.de/static/images/channels/large/JUNIO.png"
-                }
-            ]
-        },
-        {
-            "contentId": "E!",
-            "name": "E! Entertainment",
-            "pictures": [
-                {
-                    "href": "http://live.tvspielfilm.de/static/images/channels/large/E!.png"
-                }
-            ]
-        },
-        {
             "contentId": "CLASS",
             "name": "Classica",
             "pictures": [
