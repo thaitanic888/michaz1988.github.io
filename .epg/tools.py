@@ -29,12 +29,12 @@ def copy(source, destination):
 		return False
 		
 def comp(source, destination):
-	#try:
-	with open(source, 'rb') as f_in, gzip.open(destination, 'wb') as f_out:
-		f_out.writelines(f_in)
-		#return True
-	#except:
-		#return False
+	try:
+		with open(source, 'rb') as f_in, gzip.open(destination, 'wb') as f_out:
+			f_out.writelines(f_in)
+			return True
+	except:
+		return False
 
 def isfile(file):
 	return os.path.isfile(file)
