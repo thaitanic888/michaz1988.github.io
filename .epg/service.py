@@ -74,7 +74,7 @@ else:
 	enabled_grabber = False
 
 guide_temp = os.path.join(datapath, 'guide.xml')
-guide_dest = os.path.join(datapath, 'guide.xml.gz')
+guide_dest = os.path.join(os.path.dirname(datapath), 'guide.xml.gz')
 grabber_cron = os.path.join(datapath, 'grabber_cron.json')
 grabber_cron_tmp = os.path.join(temppath, 'grabber_cron.json')
 xmltv_dtd = os.path.join(datapath, 'xmltv.dtd')
