@@ -499,11 +499,11 @@ def check_startup():
 			return False
 
 	if enable_multithread:
-		log(machine)
-		log('Multithreading is currently under Kodi 19 broken, please disable it')
+		#log(machine)
+		#log('Multithreading is currently under Kodi 19 broken, please disable it')
 		ok = True
 		if ok:
-			return False
+			return True
 		return False
 
 	## create Crontab File which not exists at first time
