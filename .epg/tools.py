@@ -5,7 +5,6 @@ addon_version = "1.1.3+matrix"
 
 datapath = os.path.abspath(os.path.dirname(__file__))
 temppath = os.path.join(datapath, "temp")
-storage_path = os.path.join(temppath, "storage")
 
 def loc(id):
 	po_file = os.path.join(datapath, "strings.po")
@@ -38,10 +37,14 @@ def comp(source, destination):
 		return False
 
 def isfile(file):
-	os.path.isfile(file)
+	if os.path.isfile(file):
+		return True
+	return False
 
 def exists(fileorfolder):
-	return os.path.exists(fileorfolder)
+	if os.path.isfile(fileorfolder) or os.path.isdir(fileorfolder):
+		return True
+	return False
 
 def makedir(dir):
 	if not os.path.exists(dir):

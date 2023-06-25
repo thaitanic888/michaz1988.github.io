@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import time, tools, os, io, json, re, sys, requests
-from tools import datapath, temppath, log, notify, addon_name, addon_version, loc, storage_path
+from tools import datapath, temppath, log, notify, addon_name, addon_version, loc
 from datetime import date, datetime, timedelta
 import socket
 from collections import Counter
@@ -17,7 +17,7 @@ thread_temppath = os.path.join(temppath, "multithread")
 machine = platform.machine()
 
 ## Read Global Settings
-#storage_path = os.path.join(datapath, "storage")
+storage_path = os.path.join(datapath, "storage")
 tools.makedir(storage_path)
 auto_download = False
 timeswitch_1 = 0
@@ -73,10 +73,10 @@ if (enable_grabber_magentaDE or enable_grabber_tvsDE or enable_grabber_swcCH or 
 else:
 	enabled_grabber = False
 
-guide_temp = os.path.join(storage_path, 'guide.xml')
+guide_temp = os.path.join(datapath, 'guide.xml')
 guide_dest = os.path.join(os.path.dirname(os.path.dirname(datapath)), 'guide.xml.gz')
 grabber_cron = os.path.join(datapath, 'grabber_cron.json')
-grabber_cron_tmp = os.path.join(storage_path, 'grabber_cron.json')
+grabber_cron_tmp = os.path.join(temppath, 'grabber_cron.json')
 xmltv_dtd = os.path.join(datapath, 'xmltv.dtd')
 
 
@@ -84,7 +84,7 @@ def copy_guide_to_destination():
 	done = tools.comp(guide_temp, guide_dest)
 	if done:
 		try:
-			#tools.delete(guide_temp)
+			tools.delete(guide_temp)
 			tools.delete(os.path.join(datapath, '__pycache__'))
 			tools.delete(os.path.join(datapath, 'log.txt'))
 			tools.delete(storage_path)
@@ -257,8 +257,8 @@ def run_grabber():
 			data = data1 + data2 + data3
 			for a in data:
 				sub_title = a['title'] or ""
-				title = a['tvShow']['title']
-				desc = a['description']
+				title = a['tvShow']['title'] or""
+				desc = a['description'] or ""
 				try:
 					icon= a['images'][0]['url']
 				except:
