@@ -2,30 +2,20 @@ name: cron
 
 on:
 
-  workflow_dispatch:
+	workflow_dispatch:
 
-  schedule:
+	schedule:
 
-    - cron: "* */24 * * *"
+		- cron: "* */24 * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 
 jobs:
-
-  cron:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - uses: actions/checkout@v3
-
-      - name: cron
-
-        run: cd $HOME/work/michaz1988.github.io/michaz1988.github.io/.epg/ && python3 service.py
-
-      - uses: stefanzweifel/git-auto-commit-action@v4
-
-        with:
-
-          commit_message: cron
+	cron:
+		steps:
+			- uses: actions/checkout@v3
+			- uses: actions/setup-python@v4
+				with:
+					python-version: '3.11'
+					check-latest: true
+			- run: python service.py
