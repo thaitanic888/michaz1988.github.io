@@ -217,6 +217,24 @@
     </extension>
 </addon>
 
+<addon id="plugin.video.tools" name="Tools" version="8.0.2" provider-name="Michaz">
+    <requires>
+        <import addon="script.module.requests"/>
+        <import addon="script.module.routing"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="lib/main.py">
+        <provides>video executable</provides>
+    </extension>
+    <!--<extension point="xbmc.service" library="lib/service.py" start="login">
+        <provides>service</provides>
+    </extension>-->
+    <extension point="xbmc.addon.metadata">
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>
+
 <addon id="repository.castagnait" name="CastagnaIT Repository for Kodi 19.x (MATRIX)" provider-name="castagnait" version="1.0.1+matrix">
 	<extension name="CastagnaIT Repository" point="xbmc.addon.repository">
 		<dir>
@@ -407,24 +425,6 @@ Xship 2021.07.01
 - 0.3.3 fix internal imports
   </news>
 </extension>
-</addon>
-
-<addon id="plugin.video.tools" name="Tools" version="8.0.1" provider-name="Michaz">
-    <requires>
-        <import addon="script.module.requests"/>
-        <import addon="script.module.routing"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="lib/main.py">
-        <provides>video executable</provides>
-    </extension>
-    <!--<extension point="xbmc.service" library="lib/service.py" start="login">
-        <provides>service</provides>
-    </extension>-->
-    <extension point="xbmc.addon.metadata">
-        <assets>
-            <icon>icon.png</icon>
-        </assets>
-    </extension>
 </addon>
 
 <addon id="plugin.video.stalker" name="IPTV Stalker" version="2.2.0" provider-name="michaz">
