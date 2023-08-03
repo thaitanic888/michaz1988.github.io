@@ -246,6 +246,7 @@ def run_grabber():
 		if check_channel_dupes():
 
 			## Create XML Broadcast
+			"""
 			xml_structure.xml_broadcast_start('ZAPPN')
 			api_url = 'https://middleware.p7s1.io/zappn/v1'
 			api_epg_url = api_url + '/epg?selection={data{title,description,id,startTime,tvShow{title},channelId,tvChannelName,endTime,images(subType:"cover"){url}}}&showrunning=true'
@@ -266,6 +267,7 @@ def run_grabber():
 				item_starttime = datetime.utcfromtimestamp(a.get('startTime')).strftime('%Y%m%d%H%M%S')
 				item_endtime = datetime.utcfromtimestamp(a.get('endTime')).strftime('%Y%m%d%H%M%S')
 				xml_structure.xml_broadcast('onscreen', "PULS24", title, item_starttime, item_endtime, desc, "", icon, sub_title, "", "", "", "", "", "", "", "", "", False, "de")
+			"""
 			if enable_grabber_magentaDE:
 				if magenta_DE.startup():
 					magenta_DE.create_xml_broadcast(enable_rating_mapper, thread_temppath, download_threads)
