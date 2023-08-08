@@ -27,7 +27,7 @@ enable_rating_mapper = False
 use_local_sock = False
 tvh_local_sock = ""
 download_threads = 5
-enable_multithread = True
+enable_multithread = False
 
 
 ## Get Enabled Grabbers
