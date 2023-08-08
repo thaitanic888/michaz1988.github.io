@@ -246,28 +246,40 @@ def run_grabber():
 		if check_channel_dupes():
 
 			## Create XML Broadcast
-			"""
 			xml_structure.xml_broadcast_start('ZAPPN')
-			api_url = 'https://middleware.p7s1.io/zappn/v1'
-			api_epg_url = api_url + '/epg?selection={data{title,description,id,startTime,tvShow{title},channelId,tvChannelName,endTime,images(subType:"cover"){url}}}&showrunning=true'
-			api_headers = {'key': 'e1fb40dab69950eed0b1bcf242cc92d7', 'Referer': 'zappPipes'}
-			api_epg_from_to = '&sortAscending=true&channelId={channelId}&from={start}&to={to}&limit=5000' # time format 2020-01-08T20:25:46+01:00
-			data1 = requests.get(api_epg_url + api_epg_from_to.format(channelId='134', start=str(date.today())+'T00:00', to=str(date.today())+'T23:59'), headers = api_headers).json()["response"]["data"]
-			data2 = requests.get(api_epg_url + api_epg_from_to.format(channelId='134', start=str(date.today() + timedelta(days=1))+'T00:00', to=str(date.today() + timedelta(days=1))+'T23:59'), headers = api_headers).json()["response"]["data"]
-			data3 = requests.get(api_epg_url + api_epg_from_to.format(channelId='134', start=str(date.today() + timedelta(days=2))+'T00:00', to=str(date.today() + timedelta(days=2))+'T23:59'), headers = api_headers).json()["response"]["data"]
-			data = data1 + data2 + data3
-			for a in data:
-				sub_title = a['title'] or ""
-				title = a['tvShow']['title'] or""
-				desc = a['description'] or ""
-				try:
-					icon= a['images'][0]['url']
-				except:
-					icon= ''
-				item_starttime = datetime.utcfromtimestamp(a.get('startTime')).strftime('%Y%m%d%H%M%S')
-				item_endtime = datetime.utcfromtimestamp(a.get('endTime')).strftime('%Y%m%d%H%M%S')
-				xml_structure.xml_broadcast('onscreen', "PULS24", title, item_starttime, item_endtime, desc, "", icon, sub_title, "", "", "", "", "", "", "", "", "", False, "de")
-			"""
+			api_headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/110.0', 'Content-type': 'application/json;charset=utf-8', 'X-Api-Date-Format': 'iso', 'X-Api-Camel-Case': 'true', 'referer': 'https://streaming.simplitv.at/'}
+			data_headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/110.0', 'Accept': 'application/json'}
+			time_start = str(datetime.now().strftime("%Y-%m-%dT%H:%M:00.000Z"))
+			time_end = str((datetime.now() + timedelta(days=2)).strftime("%Y-%m-%dT%H:%M:00.000Z"))
+			epg_url = "https://api.app.simplitv.at/v1/EpgTile/FilterProgramTiles?$headers=%7B%22Content-Type%22:%22application%2Fjson%3Bcharset%3Dutf-8%22,%22X-Api-Date-Format%22:%22iso%22,%22X-Api-Camel-Case%22:true%7D"
+			epg_post = json.dumps({"platformCodename": "www", "from": time_start, "to": time_end})
+			epg_resp = requests.post(epg_url, timeout=5, headers=api_headers, data=epg_post, allow_redirects=False).json()["programs"]
+			prg_url = "https://api.app.simplitv.at/v2/Tile/GetTiles?$headers=%7B%22Content-Type%22:%22application%2Fjson%3Bcharset%3Dutf-8%22,%22X-Api-Date-Format%22:%22iso%22,%22X-Api-Camel-Case%22:true%7D"
+			prg_post = json.dumps({"platformCodename": "www", "requestedTiles": [{"id": a["id"]} for i in epg_resp.keys() for a in epg_resp[i] if i == "puls24"]})
+			epg_data = requests.post(prg_url, timeout=5, headers=api_headers, data=prg_post, allow_redirects=False).json()["tiles"]
+			xml_structure.xml_broadcast_start('ZAPPN')
+			for program in epg_data:
+				item_starttime = datetime.strptime(program["start"].split('+')[0], '%Y-%m-%dT%H:%M:%S').strftime('%Y%m%d%H%M%S')
+				item_endtime = datetime.strptime(program["stop"].split('+')[0], '%Y-%m-%dT%H:%M:%S').strftime('%Y%m%d%H%M%S')
+				items_genre = program['categories'][-1]['name'] if len(program.get("categories", [])) > 0 else ""
+				item_country = ', '.join([i['name'] for i in program['countries']]) if len(program.get("countries", [])) > 0 else ""
+				item_description = program.get("description", "").replace("\n\n", "")
+				item_title = program.get("title", "")
+				item_picture = program["images"][0]["url"]
+				item_season = program.get('seasonNumber', "")
+				item_episode = program.get("episodeNumber", "")
+				item_subtitle = program.get("subTitle", "")
+				item_date = program["date"] if program.get("date", 0) != 0 else ""
+				item_agerating, item_starrating, items_director, items_producer = "", "", "", ""
+				if len(program.get("people", [])) > 0:
+					c = {}
+					for i in program["people"]:
+						if not c.get('[B]'+i["roleName"]+'[/B]', False):
+							c['[B]'+i["roleName"]+'[/B]'] = []
+						c['[B]'+i["roleName"]+'[/B]'].append(i["fullName"])
+					items_actor = '; '.join([i+': '+', '.join([a for a in c[i]]) for i in c.keys()])
+				else: items_actor = ""
+				xml_structure.xml_broadcast('onscreen', "PULS24", item_title, item_starttime, item_endtime, item_description, item_country, item_picture, item_subtitle, items_genre, item_date, item_season, item_episode, item_agerating, item_starrating, items_director, items_producer, items_actor, False, "de")
 			if enable_grabber_magentaDE:
 				if magenta_DE.startup():
 					magenta_DE.create_xml_broadcast(enable_rating_mapper, thread_temppath, download_threads)
